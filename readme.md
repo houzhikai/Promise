@@ -1,1 +1,1 @@
-![image](http://github.com/itmyhome2013/readme_add_pic/raw/master/images/nongshalie.jpg)
+![image](https://github.com/houzhikai/Promise/blob/master/img/image.png)
