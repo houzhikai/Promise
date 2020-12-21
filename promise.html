@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>JS Bin</title>
+</head>
+<body>
+<script>
+     class Promise2 {
+   state = 'pending'
+   succeed = null
+   fail = null
+   
+   resolve(result) {
+//       console.log('resolve',result)
+      setTimeout(() => {
+        this.state = 'fulfilled'
+        this.succeed(result)
+      })
+   }
+   reject(err) {
+//      console.log('reject',err)
+     etTimeout(() => {
+        this.state = 'rejected'
+        this.succeed(err)
+      })
+   }
+   constructor(fn) {
+     fn(this.resolve.bind(this),this.reject.bind(this))
+   }
+
+
+then(succeed,fail) {
+  this.succeed = succeed
+  this.fail = fail
+}
+ }
+
+
+
+const getWeather = city => new Promise2((resolve,reject) => {
+  let xhr = new XMLHttpRequest()
+ xhr.open('GET',
+'http://rap2api.taobao.org/app/mock/245421/getWeather?city=' +city, true)
+  xhr.onload = () => {
+    if(xhr.status === 200) {        
+      resolve(JSON.parse(xhr.responseText))
+    }
+    else {
+      console.log('ok')
+      reject(`获取${city}天气失败`)
+    }
+  }
+  xhr.send()
+})
+
+
+
+//data 和 err  都是then里面的函数，data 表示成功的情况，err 表示失败的情况
+//在resolve 有 state 之前不用加上 .then ，在resolve有this.state之后，表示成功之后要做的事情，所以这时才用加上.then
+
+
+getWeather('北京')
+.then(data => {
+  console.log(data)
+},err => {
+  console.log(error)
+})
+</script>
+</body>
+</html>
